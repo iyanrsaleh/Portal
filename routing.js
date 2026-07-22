@@ -41,14 +41,7 @@ export const ROUTES = [
     icon: 'icon_settings_large',
     desc: 'Konfigurasi extension',
     module: './settings.js',
-  },
-  // {
-  //   action: 'development',
-  //   label: 'Development',
-  //   icon: 'icon_cmd',
-  //   desc: 'Perkakas dan informasi untuk developer',
-  //   module: './development.js',
-  // },
+  }
 
 ];
 
