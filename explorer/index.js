@@ -42,6 +42,16 @@
  */
 
 export async function render(container, config) {
+  const oauth = window.NXUI?.ref ? await window.NXUI.ref.get('bucketsStore', 'oauth') : null;
+  if (!oauth) {
+    const ICON_SRC = await import('../../Icon.js');
+    container.innerHTML = `<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: calc(100vh - 140px);">
+      <img src="${ICON_SRC.icon_user}" alt="" style="width: 64px; height: 64px; opacity: 0.4; margin-bottom: 16px;" />
+      <p style="color: var(--beranda-dv-text-muted); font-size: 14px; margin: 0;">Belum login. Buka menu OAuth untuk masuk.</p>
+    </div>`;
+    return;
+  }
+
   const doc = config?.explorerDoc || null;
   if (doc && config?.explorerView === 'table') return renderDocForView(container, doc, 'tabel', renderDocumentTable);
   if (doc) return renderDocForView(container, doc, 'form', renderDocumentForm);
