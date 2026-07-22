@@ -1,0 +1,12 @@
+{
+  "id": "nxvisual",
+  "title": "Nxvisual",
+  "description": "Studio Style",
+  "version": "1.0.0",
+  "author": "iyan",
+  "icon": "assistant_navigation",
+  "iconClass": "icon-folder-controller",
+  "viewId": "nxvisual",
+  "place": "edge",
+  "repodev": "D:/Extensions/nxvisual"
+}

@@ -1,0 +1,200 @@
+/*
+ * Sidebar bergaya Windows 11 Settings — search box di atas, list navigasi flat
+ * (tanpa card border per-item), indikator aktif berupa pill aksen di kiri +
+ * background rounded penuh. Semua warna lewat var(--beranda-dv-*) (kontrak
+ * README Section 16) agar ikut tema terang/gelap sistem.
+ */
+
+/* Mengisi tinggi penuh parent (.nx-ext-shell__sidebar) sampai batas bawah
+ * layar — list menu (nxv-sidebar__list) yang scroll internal saat menu
+ * banyak, title/search/footer tetap fixed terlihat (khas Windows 11 Settings). */
+.nxv-sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding:0px;
+  padding-top: 10px;
+  box-sizing: border-box;
+  
+}
+
+.nxv-sidebar__title {
+  flex: 0 0 auto;
+  margin: 4px 8px 12px;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--beranda-dv-text);
+}
+
+/* fluent-search sudah membawa ikon kaca pembesar & tombol clear + border/
+ * background sendiri — di sini hanya atur posisi & lebar di dalam sidebar. */
+.nxv-sidebar__search {
+  flex: 0 0 auto;
+  display: block;
+  width: 100%;
+
+  margin: 0 4px 16px;
+}
+/* Wrapper search+list di sidebar.js — HARUS flex:1 + min-height:0 supaya
+ * mewarisi sisa tinggi dari .nxv-sidebar dan meneruskannya ke
+ * .nxv-sidebar__list (yang scroll internal). Tanpa ini, wrapper cuma setinggi
+ * kontennya sendiri dan footer jadi menempel di bawah list, bukan di dasar
+ * sidebar. */
+.nxv-sidebar-item {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 0 10px;
+}
+/* List navigasi: flat, tanpa border per-item (beda dari sidebar app biasa).
+ * flex:1 + min-height:0 + overflow-y:auto → scroll internal sendiri saat menu
+ * banyak, tanpa mendorong search box (di atas) atau footer (di bawah) keluar. */
+.nxv-sidebar__list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.nxv-sidebar__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 9px 12px 9px 16px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  color: var(--beranda-dv-text);
+  transition: background-color 0.1s ease;
+}
+
+.nxv-sidebar__item:hover {
+  background: var(--beranda-dv-hover);
+}
+
+.nxv-sidebar__item:active {
+  background: var(--beranda-dv-border-dark);
+}
+
+/* Item aktif: background tint aksen + pill vertikal di kiri (khas Win11 Settings) */
+.nxv-sidebar__item.is-active {
+  background: color-mix(in srgb, var(--beranda-dv-accent) 12%, transparent);
+}
+
+.nxv-sidebar__item.is-active::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 16px;
+  border-radius: 999px;
+  background: var(--beranda-dv-accent);
+}
+
+.nxv-sidebar__item-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: contain;
+  opacity: 0.75;
+}
+
+.nxv-sidebar__item.is-active .nxv-sidebar__item-icon {
+  opacity: 1;
+}
+
+.nxv-sidebar__item-label {
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nxv-sidebar__item.is-active .nxv-sidebar__item-label {
+  font-weight: 600;
+}
+
+.nxv-sidebar__item[hidden] {
+  display: none;
+}
+
+.nxv-sidebar__empty {
+  padding: 16px;
+  font-size: 12px;
+  color: var(--beranda-dv-text-faint);
+  text-align: center;
+}
+
+.nxv-sidebar__footer {
+  flex: 0 0 auto;
+  margin-top: 12px;
+  padding: 8px;
+  border-top: 1px solid var(--beranda-dv-header-border);
+}
+
+/* Kartu profil user hasil login (sesi bucketsStore.oauth) — lihat oauth.js */
+.nxv-sidebar__profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
+
+.nxv-sidebar__profile-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex: 0 0 auto;
+}
+
+.nxv-sidebar__profile-avatar--placeholder {
+  padding: 6px;
+  background: var(--beranda-dv-hover);
+  opacity: 0.7;
+}
+
+.nxv-sidebar__profile-info {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.nxv-sidebar__profile-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--beranda-dv-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nxv-sidebar__profile-email {
+  font-size: 11px;
+  color: var(--beranda-dv-text-faint);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nxv-sidebar__profile--empty .nxv-sidebar__profile-name {
+  font-weight: 400;
+  color: var(--beranda-dv-text-faint);
+}
