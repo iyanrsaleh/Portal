@@ -1,12 +1,12 @@
 {
-  "id": "portal",
+  "id": "Portal",
   "title": "Portal",
   "description": "Portal",
   "version": "1.0.0",
   "author": "iyan",
   "icon": "assistant_navigation",
   "iconClass": "icon-folder-controller",
-  "viewId": "portal",
+  "viewId": "Portal",
   "place": "edge",
   "repodev": "D:/Extensions/Portal"
 }
