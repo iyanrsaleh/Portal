@@ -41,7 +41,10 @@
  * karena bukan menu sidebar.
  */
 
+let _viewId = null;
+
 export async function render(container, config) {
+  _viewId = config?.viewId || _viewId;
   const oauth = window.NXUI?.ref ? await window.NXUI.ref.get('bucketsStore', 'oauth') : null;
   if (!oauth) {
     const ICON_SRC = await import('../../Icon.js');
@@ -84,8 +87,9 @@ async function renderDocForView(container, doc, moduleName, fallbackFn) {
 
 /** Ganti sub-view tanpa reload seluruh panel — dipicu klik tombol kartu atau link "kembali". */
 export function gotoExplorerDoc(doc, view = 'form') {
+  if (!_viewId) return;
   window.dispatchEvent(new CustomEvent('beranda:open-developer-tab', {
-    detail: { viewId: 'nxvisual', contentType: 'explorer', explorerDoc: doc, explorerView: view },
+    detail: { viewId: _viewId, contentType: 'explorer', explorerDoc: doc, explorerView: view },
   }));
 }
 
@@ -140,8 +144,10 @@ async function renderGateway(container) {
     </fluent-card>
   `).join('');
 
-  cardsHost.querySelectorAll('[data-doc-action]').forEach((btn) => {
-    btn.addEventListener('click', () => gotoExplorerDoc(btn.dataset.doc, btn.dataset.docAction));
+  cardsHost.addEventListener('click', (ev) => {
+    const btn = ev.target?.closest?.('[data-doc-action]');
+    if (!btn) return;
+    gotoExplorerDoc(btn.dataset.doc, btn.dataset.docAction);
   });
 }
 

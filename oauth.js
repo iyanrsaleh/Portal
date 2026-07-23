@@ -23,7 +23,10 @@
  * yang sama dengan SPA utama sehingga window.NXUI tersedia di runtime yang sama.
  */
 
+let _viewId = null;
+
 export async function render(container, config) {
+  _viewId = config?.viewId || _viewId;
   const view = config?.oauthView || 'signin';
 
   if (view === 'signup') {
@@ -43,8 +46,9 @@ export async function render(container, config) {
  * "kembali ke Sign In" / silang antar sub-view tanpa duplikasi logic.
  */
 export function gotoOauthView(view) {
+  if (!_viewId) return;
   window.dispatchEvent(new CustomEvent('beranda:open-developer-tab', {
-    detail: { viewId: 'nxvisual', contentType: 'oauth', oauthView: view },
+    detail: { viewId: _viewId, contentType: 'oauth', oauthView: view },
   }));
 }
 
