@@ -10,11 +10,10 @@
  */
 
 export default {
-  id: 'nxvisual',           // harus sama dengan viewId di package.json
-  label: 'Portal',   // nama di tab header
+  label: 'Portal',
   description: 'v1.0.0 · Studio Style',
-  icon: 'folder-src',      // icon di tab panel (tanpa prefix 'icon-')
-  iconType: 'file',        // 'file' atau 'material'
+  icon: 'folder-src',
+  iconType: 'file',
 
   async render(container) {
     const bust = localStorage.getItem('nx-dev-watch-path') ? '?v=' + Date.now() : '';
